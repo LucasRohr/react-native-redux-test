@@ -3,7 +3,7 @@ import { Text, View, TextInput, Button } from 'react-native';
 import { InputTodoStyles } from './form-todo.styles';
 import { AnyAction } from 'redux';
 import { connect } from 'react-redux';
-import { AddTodoAction } from '../../store/actions/todo-list.actions';
+import { AddTodoAction, addTodo } from '../../store/actions/todo-list.actions';
 import { TodoModel } from '../../models/todo.model';
 
 
@@ -21,10 +21,12 @@ const TodoInputComponent = (props: Props) => {
 
     const [text, setText] = useState('')
 
-    function addTodo() {
-        dispatch(new AddTodoAction(
-            new TodoModel(++id, text, false)
-        ))
+    function onPressAddTodo() {
+        dispatch(
+            addTodo(
+                new TodoModel(++id, text, false)
+            )
+        )
     }
 
     return (
@@ -34,15 +36,14 @@ const TodoInputComponent = (props: Props) => {
                 <TextInput placeholder="Digite aqui" onChangeText = {setText} value={text} >
                 </TextInput>
             </View>
-            <Text> { text } </Text>
-            <Button title="Adicionar" onPress={() => { addTodo() }} ></Button>
+            <Button title="Adicionar" onPress={() => { onPressAddTodo() }} ></Button>
         </View>
 
     )
 
 }
 
-const mapDispatchToProps = (dispatch: (action: AnyAction) => void ) => ()
+const mapDispatchToProps = (dispatch: (action: AnyAction) => void ) => ({ dispatch })
 
 export const ConnectedTodoInput = connect(null,mapDispatchToProps)(TodoInputComponent)
 

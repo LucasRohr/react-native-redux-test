@@ -7,15 +7,22 @@ export const todoListReducer = (state: TodoModel[] = initialState, action: AddTo
 
     switch (action.type) {
         case TodoListActionsTypes.ADD_TODO:
-            state.push(action.payload)
-            return state
+            return [
+                ...state,
+                action.payload
+            ]
             
         case TodoListActionsTypes.CHANGE_CHECK:
-            const todoItem: TodoModel | undefined = state.find((todoModel) => todoModel.id === action.payload)
-            if(todoItem) {
-                todoItem.isCheck = !todoItem.isCheck
-            }
-            return state
+
+            return state.map(
+                (todo) => {
+                    if(todo.id === action.payload) {
+                        todo.isCheck = !todo.isCheck
+                    }
+
+                    return todo
+                }
+            )
             
         default:
             return state;

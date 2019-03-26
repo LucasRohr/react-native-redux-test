@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { TodoModel } from '../../models/todo.model';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { AnyAction } from 'redux';
-import { ChangeTodoCheckAction } from '../../store/actions/todo-list.actions';
+import { ChangeTodoCheckAction, changeTodoCheck } from '../../store/actions/todo-list.actions';
 import { Store } from '../../store';
 import { connect } from 'react-redux';
 
@@ -33,7 +33,9 @@ const TodoListComponent = (props: Props) => {
     }
 
     function dispatchCheckAction(id: number) {
-        dispatch(new ChangeTodoCheckAction(id))
+        dispatch(
+            changeTodoCheck(id)
+        )
     }
 
     return (
